@@ -2,7 +2,7 @@ from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
 
-class ArticlesConfig(AppConfig):
+class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'articles'
-    verbose_name = _("Управление статьями")
+    name = 'users'
+    verbose_name = _("Управление пользователями")
