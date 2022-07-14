@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import mixins, viewsets
 
-# Create your views here.
+from tags.models import Tag
+from tags.serializers import TagSerializer
+
+
+class TagViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet
+):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
