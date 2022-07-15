@@ -14,3 +14,4 @@ class TagViewSet(
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
+    search_fields = ('name', 'slug',)
