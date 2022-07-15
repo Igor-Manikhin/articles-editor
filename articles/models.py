@@ -11,8 +11,10 @@ class Article(models.Model):
     richtext = models.TextField(verbose_name=_('Текст'))
     banner = models.TextField(verbose_name=_('Изображение баннера в формате base64'))
     author = models.ForeignKey(
-        get_user_model(), related_name='articles',
-        on_delete=models.CASCADE, verbose_name=_("Автор")
+        get_user_model(),
+        related_name='articles',
+        on_delete=models.CASCADE,
+        verbose_name=_("Автор")
     )
     tags = models.ManyToManyField(Tag, related_name="articles", verbose_name="Теги", blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("Дата создания"))

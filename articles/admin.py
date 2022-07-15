@@ -22,9 +22,17 @@ class ArticleAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('author', 'created_at', 'updated_at', 'banner_image',)
 
+    def get_queryset(self, request):
+        articles_queryset = super().get_queryset(request)
+
+        if request.user.is_superuser:
+            return articles_queryset
+
+        return articles_queryset.filter(author=request.user).all()
+
     @admin.display(description=_('Превью баннера'))
     def banner_image(self, obj):
-        return format_html('<img src="{}" width="500" height="350">', mark_safe(obj.banner))
+        return format_html('<img src="data:;base64,{}" width="500" height="350">', mark_safe(obj.banner))
 
     def save_model(self, request, obj, form, change):
         obj.author = request.user
