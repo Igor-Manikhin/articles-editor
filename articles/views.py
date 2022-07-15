@@ -32,7 +32,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     search_fields = ('title', 'tags__name', 'author__name', 'author__surname', 'author__email',)
 
     def get_permissions(self) -> list:
-        if self.action in ['create', 'update', 'partial_update']:
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
             permission_classes = [(IsSuperAdmin | Common) & IsAuthenticated]
         else:
             permission_classes = [AllowAny]
