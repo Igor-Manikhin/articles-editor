@@ -5,7 +5,7 @@ from users.models import User
 
 
 class UserAdminConfig(UserAdmin):
-    """Административный интерфейс"""
+    """Конфигурация админ.панели для работы с пользователями"""
     model = User
     search_fields = ('email', 'name', 'surname',)
     list_filter = ('email', 'name', 'surname', 'is_active', 'is_staff',)

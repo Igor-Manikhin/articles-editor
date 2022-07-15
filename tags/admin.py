@@ -1,9 +1,11 @@
 from django.contrib import admin
+from django.db.models import QuerySet
 
 from tags.models import Tag
 
 
 class TagAdmin(admin.ModelAdmin):
+    """Конфигурация админ.панели для работы с тегами статей"""
     model = Tag
     list_display = ('name', 'user',)
     fieldsets = (
@@ -13,7 +15,7 @@ class TagAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('user',)
 
-    def get_queryset(self, request):
+    def get_queryset(self, request) -> QuerySet[Tag]:
         tags_queryset = super().get_queryset(request)
 
         if request.user.is_superuser:
@@ -21,7 +23,7 @@ class TagAdmin(admin.ModelAdmin):
 
         return tags_queryset.filter(user=request.user).all()
 
-    def save_model(self, request, obj, form, change):
+    def save_model(self, request, obj, form, change) -> None:
         obj.user = request.user
         super().save_model(request, obj, form, change)
 

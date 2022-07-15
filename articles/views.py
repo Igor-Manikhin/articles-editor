@@ -31,7 +31,7 @@ class ArticleViewSet(viewsets.ModelViewSet):
     filterset_class = ArticleFilterSet
     search_fields = ('title', 'tags__name', 'author__name', 'author__surname', 'author__email',)
 
-    def get_permissions(self):
+    def get_permissions(self) -> list:
         if self.action in ['create', 'update', 'partial_update']:
             permission_classes = [(IsSuperAdmin | Common) & IsAuthenticated]
         else:
@@ -60,7 +60,8 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
         return Response(
             response_serializer.data,
-            status=status.HTTP_201_CREATED, headers=headers
+            status=status.HTTP_201_CREATED,
+            headers=headers
         )
 
     def update(self, request, *args, **kwargs) -> Response:

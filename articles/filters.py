@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 from django.utils.translation import gettext_lazy as _
 from django_filters.rest_framework import FilterSet, CharFilter
 
@@ -14,5 +14,5 @@ class ArticleFilterSet(FilterSet):
         fields = ('tag', 'author')
 
     @staticmethod
-    def filter_by_author(queryset, _, value):
+    def filter_by_author(queryset: QuerySet[Article], _, value: str) -> QuerySet[Article]:
         return queryset.filter(Q(author__name__iexact=value) | Q(author__surname__iexact=value))
