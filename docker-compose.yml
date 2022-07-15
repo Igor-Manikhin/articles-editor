@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  web:
+    build: .
+    container_name: articles-editor-backend
+    volumes:
+      - .:/app
+    command: bash -c "./entrypoint.sh"
+    ports:
+      - "8080:8000"
+    restart: on-failure

@@ -42,7 +42,7 @@ class ArticleCreateUpdateSerializer(serializers.ModelSerializer):
     @staticmethod
     def __set_article_tags(article_instance: Article, tags_names_list: List[str]) -> None:
         if tags_names_list:
-            tags_queryset = Tag.objects.only('name').filter(name__in=tags_names_list).all()
+            tags_queryset = Tag.objects.filter(name__in=tags_names_list).all()
             article_instance.tags.set(tags_queryset)
 
     def create(self, validated_data: dict) -> Article:

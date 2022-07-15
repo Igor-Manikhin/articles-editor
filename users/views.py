@@ -5,5 +5,10 @@ from users.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
+    queryset = User.objects.only(
+        'name',
+        'surname',
+        'email'
+    ).all()
     serializer_class = UserSerializer
+    search_fields = ('name', 'surname', 'email', )
