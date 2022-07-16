@@ -1,4 +1,8 @@
+from copy import deepcopy
+from typing import Tuple
+
 from django.contrib import admin
+from django.contrib.admin.helpers import Fieldset
 from django.db.models import QuerySet
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
@@ -13,7 +17,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'author',)
     fieldsets = (
         ('Основная информация', {
-            'fields': ('title', 'richtext', 'banner', 'author')
+            'fields': ('title', 'richtext', 'banner', 'author',)
         }),
         ('Даты создания и редактирования', {
             'fields': ('created_at', 'updated_at',)
@@ -23,6 +27,14 @@ class ArticleAdmin(admin.ModelAdmin):
         })
     )
     readonly_fields = ('author', 'created_at', 'updated_at', 'banner_image',)
+
+    def get_fieldsets(self, request, obj=None) -> Tuple[Fieldset]:
+        fieldsets = deepcopy(super().get_fieldsets(request, obj))
+
+        if obj is None:
+            fieldsets[-1][1]['fields'] = ('tags', )
+
+        return fieldsets
 
     def get_queryset(self, request) -> QuerySet[Article]:
         articles_queryset = super().get_queryset(request)
